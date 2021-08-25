@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shopping_app/pages/AuthPage.dart';
+import 'package:shopping_app/pages/LoginPage.dart';
+import 'package:shopping_app/pages/RegPage.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/pages/HomePage.dart';
-import 'package:shopping_app/models/product_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
             color: Colors.black,
           ),
         ),
-        home: AuthScreen(),
+        home: LoginScreen(),
       );});
     }
 }

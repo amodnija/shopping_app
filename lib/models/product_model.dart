@@ -17,13 +17,10 @@ class Product {
 }
 
 final firestoreInstance = FirebaseFirestore.instance;
-
-List<Product>? getData() {
+Future<List<Product>?> getData() async {
   List<Product> products = [];
-  print("exec");
-  firestoreInstance.collection("products").get().then((querySnapshot) {
+  await firestoreInstance.collection("products").get().then((querySnapshot) {
     querySnapshot.docs.forEach((result) {
-      print(result);
       products.add(Product(
           name: result.data()['name'],
           imageUrl: result.data()['imageUrl'],
@@ -35,5 +32,5 @@ List<Product>? getData() {
 }
 List<Product> cart = [];
 List<Product> favs = [];
-List<Product>? products = getData();
+List<Product>? products = [];
 

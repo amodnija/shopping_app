@@ -1,72 +1,43 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping_app/pages/LoginPage.dart';
 import 'package:sizer/sizer.dart';
+import 'package:email_validator/email_validator.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class AuthScreen extends StatelessWidget {
-
+class RegScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Firebase Auth Demo',
-      home: MyHomePage(title: 'Firebase Auth Demo'),
+      title: 'Register to shopping app',
+      home: MyRegPage(title: 'Register to shopping app'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+class MyRegPage extends StatefulWidget {
+  MyRegPage({Key? key, required this.title}) : super(key: key);
   final String title;
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyRegPageState createState() => _MyRegPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-
-//4
+class _MyRegPageState extends State<MyRegPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[
-          Builder(builder: (BuildContext context) {
-//5
-            return FlatButton(
-              child: const Text('Sign out'),
-              textColor: Theme
-                  .of(context)
-                  .buttonColor,
-              onPressed: () async {
-                final User? user = await _auth.currentUser ;
-                if (user == null) {
-//6
-                  Scaffold.of(context).showSnackBar(const SnackBar(
-                    content: Text('No one has signed in.'),
-                  ));
-                  return;
-                }
-                await _auth.signOut();
-                final String uid = user.uid;
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(uid + ' has successfully signed out.'),
-                ));
-              },
-            );
-          })
-        ],
       ),
       body: Builder(builder: (BuildContext context) {
-//7
         return ListView(
           scrollDirection: Axis.vertical,
           padding: const EdgeInsets.all(16),
-          children: <Widget>[
-            _RegisterEmailSection()
-          ],
+          children: <Widget>[_RegisterEmailSection()],
         );
       }),
     );
@@ -74,44 +45,32 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class _RegisterEmailSection extends StatefulWidget {
-
   @override
-  State<StatefulWidget> createState() =>
-      _RegisterEmailSectionState();
+  State<StatefulWidget> createState() => _RegisterEmailSectionState();
 }
+
 class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
   final String title = 'Registration';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _success = false;
   String _userEmail = '';
-  @override
 
+  @override
   void _register() async {
-    final User? user = (await
-    _auth.createUserWithEmailAndPassword(
+    final User? user = (await _auth.createUserWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
-    )
-    ).user;
+    ))
+        .user;
     if (user != null) {
       setState(() {
-        _success = true;
         _userEmail = user.email!;
       });
     } else {
       setState(() {
-        _success = true;
       });
     }
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -129,16 +88,15 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
                 validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
+                  if (!EmailValidator.validate(value!)) {
+                    return 'Please enter valid email';
                   }
                   return null;
                 },
               ),
               TextFormField(
                 controller: _passwordController,
-                decoration: const InputDecoration(labelText:
-                'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 validator: (String? value) {
                   if (value!.isEmpty) {
                     return 'Please enter some text';
@@ -153,23 +111,29 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _register();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => LoginScreen()));
+                      Fluttertoast.showToast(msg: "Registered successfully");
+                    }
+                    else{
+                      Fluttertoast.showToast(msg: "Registration failed");
                     }
                   },
                   child: const Text('Submit'),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(_success == null
-                    ? ''
-                    : (_success
-                    ? 'Successfully registered ' + _userEmail
-                    : 'Registration failed')),
-              )
             ],
           ),
         ),
       ),
     );
   }
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 }
+
+
