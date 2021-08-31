@@ -35,7 +35,7 @@ class ProductCarousal extends StatelessWidget {
                 products![index].imageUrl,
                 fit: BoxFit.contain,
                 height: 40.h,
-                width: 150,
+                width: 70.w,
               ),
             ),
           ),
@@ -51,7 +51,7 @@ class ProductCarousal extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    '\$${products![index].price.toString()}',
+                    '\₹${products![index].price.toString()}',
                     style: TextStyle(
                         color: Colors.orange,
                         fontSize: 18,
@@ -63,7 +63,7 @@ class ProductCarousal extends StatelessWidget {
                 ),
                 FlatButton(
                   padding: EdgeInsets.all(10),
-                  color: Colors.blueAccent,
+                  color: Colors.teal,
                   child: Row(
                     children: [
                       Icon(
@@ -94,7 +94,7 @@ class ProductCarousal extends StatelessWidget {
                 ),
                 FlatButton(
                   padding: EdgeInsets.all(10),
-                  color: Colors.blueAccent,
+                  color: Colors.teal,
                   child: Row(
                     children: [
                       Icon(
@@ -138,10 +138,13 @@ class ProductCarousal extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          child: Container(
+            width: double.infinity,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+            ),
           ),
         ),
         Container(

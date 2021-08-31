@@ -7,6 +7,8 @@ import 'package:shopping_app/pages/FavPage.dart';
 import 'package:shopping_app/widgets/productcarousal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'RegPage.dart';
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class HomeScreen extends StatefulWidget {
@@ -45,12 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (!(user == null)) {
                       await _auth.signOut();
                       Fluttertoast.showToast(msg: "Signed out successfully");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => RegScreen()));
                     }
                   },
                   child: Icon(
-                    Icons.menu,
+                    Icons.logout,
                     size: 30,
-                    color: Colors.black,
+                    color: Colors.teal,
                   ),
                 ),
               ),
@@ -61,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                      color: Colors.teal),
                 ),
               ),
               centerTitle: true,
@@ -78,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Icon(
                           Icons.shopping_cart,
                           size: 30,
-                          color: Colors.black,
+                          color: Colors.teal,
                         ),
                       ),
                     ),
@@ -94,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Icon(
                       Icons.favorite,
                       size: 30,
-                      color: Colors.black,
+                      color: Colors.teal,
                     ),
                   ),
                 ),
@@ -103,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
             body: ListView(
               children: <Widget>[
                 ProductCarousal(
-                  title: "Available Items",
+                  title: "Items in our inventory:",
                   products: products,
                 ),
               ],

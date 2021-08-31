@@ -14,15 +14,14 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login to shopping app',
-      home: MyLoginPage(title: 'Login to shopping app'),
+      home: MyLoginPage(),
     );
   }
 }
 
 class MyLoginPage extends StatefulWidget {
-  MyLoginPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  MyLoginPage({Key? key}) : super(key: key);
+
 
   @override
   _MyLoginPageState createState() => _MyLoginPageState();
@@ -33,7 +32,19 @@ class _MyLoginPageState extends State<MyLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.white,
+        elevation: 5.0,
+        title: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            'Shopping App',
+            style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal),
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Builder(builder: (BuildContext context) {
         return ListView(
@@ -55,23 +66,22 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool success = false;
 
   void _signInWithEmailAndPassword() async {
-    final User? user = (await _auth.signInWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    ))
-        .user;
+    try {
+      final User? user = (await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ))
+          .user;
 
-    if (user != null) {
       setState(() {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => HomeScreen()));
       });
-    } else {
-      setState(() {
-        Fluttertoast.showToast(msg: "Login failed");
-      });
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Login failed, check credentials");
     }
   }
 
@@ -82,41 +92,58 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            child: const Text('Test sign in with email and password'),
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.center,
+          Center(
+            child: Image.network(
+              'https://images-na.ssl-images-amazon.com/images/I/41YomI34lLL.png',
+              fit: BoxFit.contain,
+              width: 60.w,
+              height: 30.h,
+            ),
           ),
-          TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(labelText: 'Email'),
-            validator: (String? value) {
-              if (!EmailValidator.validate(value!)) {
-                return 'Please enter valid email';
-              }
-              return null;
-            },
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+              validator: (String? value) {
+                if (!EmailValidator.validate(value!)) {
+                  return 'Please enter valid email';
+                }
+                return null;
+              },
+            ),
           ),
-          TextFormField(
-            controller: _passwordController,
-            decoration: const InputDecoration(labelText: 'Password'),
-            validator: (String? value) {
-              if (value!.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: 'Password'),
+              validator: (String? value) {
+                if (value!.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             alignment: Alignment.center,
-            child: RaisedButton(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.teal,
+                onPrimary: Colors.white,
+              ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _signInWithEmailAndPassword();
                 }
               },
-              child: const Text('Submit'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text('Login',style: TextStyle(fontSize: 18)),
+              ),
             ),
           ),
         ],

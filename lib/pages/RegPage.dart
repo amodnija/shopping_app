@@ -12,15 +12,13 @@ class RegScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Register to shopping app',
-      home: MyRegPage(title: 'Register to shopping app'),
+      home: MyRegPage(),
     );
   }
 }
 
 class MyRegPage extends StatefulWidget {
-  MyRegPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  MyRegPage({Key? key}) : super(key: key);
 
   @override
   _MyRegPageState createState() => _MyRegPageState();
@@ -31,7 +29,17 @@ class _MyRegPageState extends State<MyRegPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.white,
+        elevation: 5.0,
+        title: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            'Shopping App',
+            style: TextStyle(
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.teal),
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Builder(builder: (BuildContext context) {
         return ListView(
@@ -68,8 +76,7 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
         _userEmail = user.email!;
       });
     } else {
-      setState(() {
-      });
+      setState(() {});
     }
   }
 
@@ -84,42 +91,91 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (String? value) {
-                  if (!EmailValidator.validate(value!)) {
-                    return 'Please enter valid email';
-                  }
-                  return null;
-                },
+              Center(
+                child: Image.network(
+                    'https://images-na.ssl-images-amazon.com/images/I/41YomI34lLL.png',
+                    fit: BoxFit.contain,
+                    width: 60.w,
+                    height: 30.h,
+                ),
               ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  validator: (String? value) {
+                    if (!EmailValidator.validate(value!)) {
+                      return 'Please enter valid email';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  obscureText: true,
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter some text';
+                    } else if (value.length < 6) {
+                      return 'Password should be at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 alignment: Alignment.center,
-                child: RaisedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _register();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => LoginScreen()));
-                      Fluttertoast.showToast(msg: "Registered successfully");
-                    }
-                    else{
-                      Fluttertoast.showToast(msg: "Registration failed");
-                    }
-                  },
-                  child: const Text('Submit'),
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.teal,
+                        onPrimary: Colors.white,
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _register();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => LoginScreen()));
+                          Fluttertoast.showToast(
+                              msg: "Registered successfully");
+                        } else {
+                          Fluttertoast.showToast(msg: "Registration failed");
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text('Register',style: TextStyle(fontSize: 18)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'Already a member?',
+                        style: TextStyle(fontSize: 16, color: Colors.grey ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.teal,
+                        onPrimary: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text('Login',style: TextStyle(fontSize: 18)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -128,6 +184,7 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
       ),
     );
   }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -135,5 +192,3 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
     super.dispose();
   }
 }
-
-
