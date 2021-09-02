@@ -33,4 +33,11 @@ Future<List<Product>?> getData() async {
 List<Product> cart = [];
 List<Product> favs = [];
 List<Product>? products = [];
+double generateTotal() {
+  double total = 0;
+  for (Product i  in cart){
+    total += i.price*i.count;
+  }
+  return total;
+}
 

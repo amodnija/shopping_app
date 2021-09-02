@@ -133,6 +133,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              obscureText: true,
               controller: _passwordController,
               decoration: const InputDecoration(labelText: 'Password'),
               validator: (String? value) {
