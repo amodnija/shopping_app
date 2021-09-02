@@ -93,11 +93,23 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Image.network(
-                  'https://images-na.ssl-images-amazon.com/images/I/41YomI34lLL.png',
-                  fit: BoxFit.contain,
-                  width: 60.w,
-                  height: 30.h,
+                  child: Text('Register for shopping app',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black45))),
+              Divider(
+                color: Colors.black,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Image(
+                    image: AssetImage('lib/assets/logo.png'),
+                    fit: BoxFit.contain,
+                    width: 60.w,
+                    height: 30.h,
+                  ),
                 ),
               ),
               Padding(

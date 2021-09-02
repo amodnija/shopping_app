@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:page_transition/page_transition.dart';
 
-
 import 'HomePage.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,7 +22,6 @@ class LoginScreen extends StatelessWidget {
 
 class MyLoginPage extends StatefulWidget {
   MyLoginPage({Key? key}) : super(key: key);
-
 
   @override
   _MyLoginPageState createState() => _MyLoginPageState();
@@ -41,9 +39,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
           child: Text(
             'Shopping App',
             style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal),
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.teal),
           ),
         ),
         centerTitle: true,
@@ -102,14 +98,25 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Center(
-            child: Image.network(
-              'https://images-na.ssl-images-amazon.com/images/I/41YomI34lLL.png',
-              fit: BoxFit.contain,
-              width: 60.w,
-              height: 30.h,
+              child: Text('Login to shopping app',
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black45))),
+          Divider(
+            color: Colors.black,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Image(
+                image: AssetImage('lib/assets/logo.png'),
+                fit: BoxFit.contain,
+                width: 60.w,
+                height: 30.h,
+              ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
@@ -151,7 +158,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: const Text('Login',style: TextStyle(fontSize: 18)),
+                child: const Text('Login', style: TextStyle(fontSize: 18)),
               ),
             ),
           ),
