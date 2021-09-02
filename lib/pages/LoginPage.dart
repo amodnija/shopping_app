@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_app/models/product_model.dart';
 import 'package:sizer/sizer.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:page_transition/page_transition.dart';
+
 
 import 'HomePage.dart';
 
@@ -77,8 +79,15 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
           .user;
 
       setState(() {
+        Navigator.pop(context);
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          context,
+          PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: HomeScreen(),
+              inheritTheme: true,
+              ctx: context),
+        );
       });
     } catch (e) {
       Fluttertoast.showToast(msg: "Login failed, check credentials");

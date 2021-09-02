@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shopping_app/pages/LoginPage.dart';
 import 'package:sizer/sizer.dart';
 import 'package:email_validator/email_validator.dart';
@@ -93,10 +94,10 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
             children: <Widget>[
               Center(
                 child: Image.network(
-                    'https://images-na.ssl-images-amazon.com/images/I/41YomI34lLL.png',
-                    fit: BoxFit.contain,
-                    width: 60.w,
-                    height: 30.h,
+                  'https://images-na.ssl-images-amazon.com/images/I/41YomI34lLL.png',
+                  fit: BoxFit.contain,
+                  width: 60.w,
+                  height: 30.h,
                 ),
               ),
               Padding(
@@ -141,8 +142,15 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _register();
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => LoginScreen()));
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: LoginScreen(),
+                                inheritTheme: true,
+                                ctx: context),
+                          );
                           Fluttertoast.showToast(
                               msg: "Registered successfully");
                         } else {
@@ -151,14 +159,15 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: const Text('Register',style: TextStyle(fontSize: 18)),
+                        child: const Text('Register',
+                            style: TextStyle(fontSize: 18)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Text(
                         'Already a member?',
-                        style: TextStyle(fontSize: 16, color: Colors.grey ),
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                     ),
                     ElevatedButton(
@@ -167,12 +176,21 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
                         onPrimary: Colors.white,
                       ),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: LoginScreen(),
+                            duration: Duration(milliseconds: 300),
+                            reverseDuration: Duration(milliseconds: 300),
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: const Text('Login',style: TextStyle(fontSize: 18)),
+                        child:
+                            const Text('Login', style: TextStyle(fontSize: 18)),
                       ),
                     ),
                   ],

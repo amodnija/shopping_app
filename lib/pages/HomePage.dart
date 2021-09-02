@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shopping_app/models/product_model.dart';
 import 'package:shopping_app/pages/CartPage.dart';
 import 'package:shopping_app/pages/FavPage.dart';
@@ -76,8 +77,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(top: 10, right: 20),
                       child: InkResponse(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => CartPage()));
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: CartPage(),
+                              duration: Duration(milliseconds: 300),
+                              reverseDuration: Duration(milliseconds: 300),
+                            ),
+                          );
                         },
                         child: Icon(
                           Icons.shopping_cart,
@@ -92,8 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.only(right: 20),
                   child: InkResponse(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => FavPage()));
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: FavPage(),
+                          duration: Duration(milliseconds: 300),
+                          reverseDuration: Duration(milliseconds: 300),
+                        ),
+                      );
                     },
                     child: Icon(
                       Icons.favorite,
