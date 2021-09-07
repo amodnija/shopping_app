@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
             color: Colors.black,
           ),
         ),
-        home: RegScreen(),
+        home: HomeScreen(),
       );});
     }
 }

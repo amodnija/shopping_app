@@ -137,15 +137,16 @@ class ProductCarousal extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Container(
-            width: double.infinity,
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-            ),
-          ),
+          padding: const EdgeInsets.only(top:8.0),
+          child: Center(
+              child: Text('Available items:',
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54))),
+        ),
+        Divider(
+          color: Colors.black,
         ),
         Container(
           height: 80.h,

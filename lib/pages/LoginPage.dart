@@ -97,12 +97,15 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
-              child: Text('Login to shopping app',
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black45))),
+          Padding(
+            padding: const EdgeInsets.only(top:8.0),
+            child: Center(
+                child: Text('Login to shopping app',
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54))),
+          ),
           Divider(
             color: Colors.black,
           ),
