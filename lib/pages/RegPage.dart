@@ -83,6 +83,8 @@ class _RegisterEmailSectionState extends State<_RegisterEmailSection> {
 
   Widget build(BuildContext context) {
     return Container(
+      height: 99.h,
+      width: 99.w,
       child: Scaffold(
         appBar: null,
         body: Form(

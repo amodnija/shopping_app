@@ -8,31 +8,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'FavPage.dart';
 import 'HomePage.dart';
 import 'RegPage.dart';
-import 'OrderPage';
+import 'CartPage.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class CartPage extends StatefulWidget {
-  CartPage({Key? key}) : super(key: key);
+class OrderPage extends StatefulWidget {
+  OrderPage({Key? key}) : super(key: key);
 
   @override
-  _CartPageState createState() => _CartPageState();
+  _OrderPageState createState() => _OrderPageState();
 }
 
-class _CartPageState extends State<CartPage> {
-
-  @override
-  void initState() {
-    if (ordered == true) {
-      setState(() {
-        cart.clear();
-        ordered = false;
-      });
-    }
-    super.initState();
-  }
-
-
+class _OrderPageState extends State<OrderPage> {
   makeitem(int index) {
     return Row(children: [
       Container(
@@ -63,27 +50,6 @@ class _CartPageState extends State<CartPage> {
               textAlign: TextAlign.center),
         ),
       ),
-      Column(children: [
-        FlatButton(
-            onPressed: () {
-              setState(() {
-                cart[index].count += 1;
-              });
-            },
-            child: Icon(Icons.add)),
-        FlatButton(
-            onPressed: () {
-              setState(() {
-                if (cart[index].count > 1) {
-                  cart[index].count -= 1;
-                } else {
-                  cart.removeAt(index);
-                  Fluttertoast.showToast(msg: "Item removed from cart");
-                }
-              });
-            },
-            child: Icon(Icons.remove))
-      ])
     ]);
   }
 
@@ -157,7 +123,6 @@ class _CartPageState extends State<CartPage> {
         elevation: 10.0,
         child: ListView(
           children: <Widget>[
-            //Here you place your menu items
             ListTile(
               leading: Icon(
                 Icons.home,
@@ -207,12 +172,24 @@ class _CartPageState extends State<CartPage> {
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Center(
-              child: Text('Your shopping cart: ',
+              child: Text('Thank you for ordering!!',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black))),
+        ),
+        Divider(
+          color: Colors.black,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Center(
+              child: Text('Order Summary',
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54))),
-        ),
+                      color: Colors.black54)),
+        ),),
         Divider(
           color: Colors.black,
         ),
@@ -231,7 +208,7 @@ class _CartPageState extends State<CartPage> {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: Text('Total: ₹${generateTotal().toStringAsFixed(2)}',
+            child: Text('Total: ₹${orderTotal().toStringAsFixed(2)}',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -239,31 +216,7 @@ class _CartPageState extends State<CartPage> {
           ),
         )
       ]),
-      bottomSheet: Container(
-        height: 10.h,
-        color: Colors.teal,
-        child: Center(
-          child: new InkWell(
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: OrderPage(),
-                  duration: Duration(milliseconds: 300),
-                  reverseDuration: Duration(milliseconds: 300),
-                ),
-              );
-              },
-            child: Text(
-              "PLACE ORDER (₹${generateTotal().toStringAsFixed(2)})",
-              style: TextStyle(
-                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ),
+
     );
   }
 }

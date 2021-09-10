@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
 class Product {
   String imageUrl;
@@ -33,6 +34,7 @@ Future<List<Product>?> getData() async {
 List<Product> cart = [];
 List<Product> favs = [];
 List<Product>? products = [];
+bool ordered = false;
 double generateTotal() {
   double total = 0;
   for (Product i  in cart){
@@ -40,4 +42,11 @@ double generateTotal() {
   }
   return total;
 }
-
+double orderTotal() {
+  double total = 0;
+  for (Product i  in cart){
+    total += i.price*i.count;
+  }
+  ordered = true;
+  return total;
+}
