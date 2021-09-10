@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shopping_app/models/product_model.dart';
 import 'package:shopping_app/pages/CartPage.dart';
 import 'package:shopping_app/pages/FavPage.dart';
+import 'package:shopping_app/pages/MakeProduct.dart';
 import 'package:shopping_app/widgets/productcarousal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -127,11 +128,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Divider(height: 3.0),
                   ListTile(
-                    leading: Icon(Icons.contact_phone, color: Colors.teal),
-                    title: Text('Contact Us',
+                    leading: Icon(Icons.add, color: Colors.teal),
+                    title: Text('Add Product',
                         style: TextStyle(fontSize: 18, color: Colors.teal)),
                     onTap: () {
-                      // Here you can give your route to navigate
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: NewProdPage(),
+                          duration: Duration(milliseconds: 300),
+                          reverseDuration: Duration(milliseconds: 300),
+                        ),
+                      );
                     },
                   ),
                   Divider(height: 3.0),
