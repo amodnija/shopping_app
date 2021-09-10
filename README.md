@@ -1,16 +1,5 @@
 # shopping_app
 
-A new Flutter application.
+A shopping app which supports authentication, cart and favourite functions. Written in flutter.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+App working video : https://drive.google.com/file/d/1l92de6JauxIW4gswqWjxjyU_KzLc2Q_C/view?usp=sharing
